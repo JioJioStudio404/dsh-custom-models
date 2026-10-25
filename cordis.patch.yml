@@ -1,0 +1,13 @@
+# dsh-custom-models bundle patch: one host row.
+#
+# The row id is also the settings namespace of this plugin's Models-page rows
+# (one per site that has keys, and one for the switch groups), where its card
+# renders (`settings.models.provider-card`, keyed by this id). Sites and their
+# models live in $DSH_HOME/storages/custom-models-settings.json, keys in
+# custom-models-keys.json; both are managed in the 自定义 tab of a conversation.
+
+- insert:
+    - id: dsh-custom-models
+      name: dsh-custom-models
+      inject: ['llm']
+      config: {}
