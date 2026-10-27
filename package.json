@@ -1,6 +1,6 @@
 {
   "name": "dsh-custom-models",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Your own API sites for DeepSeek Harness — relays, gateways, self-hosted and local servers speaking OpenAI Chat Completions or Responses, or Anthropic Messages, requested the way DSH's own custom gateway requests them (the same pi-ai release, bundled) — with many keys per site switched by hand, \"fetch models\" that reads what each site and model is (new-api / one-api, Charm Hyper, Vercel and OpenRouter balances and prices; a reference of 769 models for the rest), switch groups (one picker entry served by the site you choose), reasoning effort, tool calling and reasoning replay.",
   "type": "module",
   "main": "lib/index.js",
