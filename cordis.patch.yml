@@ -4,7 +4,7 @@
 # (one per site that has keys, and one for the switch groups), where its card
 # renders (`settings.models.provider-card`, keyed by this id). Sites and their
 # models live in $DSH_HOME/storages/custom-models-settings.json, keys in
-# custom-models-keys.json; both are managed in the 自定义 tab of a conversation.
+# custom-models-keys.json; both are managed in the Custom tab of a conversation.
 
 - insert:
     - id: dsh-custom-models

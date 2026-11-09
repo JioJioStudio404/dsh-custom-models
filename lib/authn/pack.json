@@ -1,0 +1,1411 @@
+{
+  "schema": 1,
+  "version": "2026.11.09-7",
+  "published": "2026-11-09",
+  "minPlugin": "0.6.0",
+  "channels": [
+    {
+      "id": "anthropic",
+      "name": {
+        "zh": "Anthropic 官方 API",
+        "en": "Anthropic API"
+      },
+      "group": "claude-hosts"
+    },
+    {
+      "id": "cloud",
+      "name": {
+        "zh": "云平台托管（Bedrock / Vertex 类）",
+        "en": "Cloud platform (Bedrock / Vertex type)"
+      },
+      "group": "claude-hosts"
+    },
+    {
+      "id": "bedrock",
+      "parent": "cloud",
+      "name": {
+        "zh": "AWS Bedrock",
+        "en": "AWS Bedrock"
+      },
+      "group": "claude-hosts"
+    },
+    {
+      "id": "vertex",
+      "parent": "cloud",
+      "name": {
+        "zh": "Google Vertex / Antigravity",
+        "en": "Google Vertex / Antigravity"
+      },
+      "group": "claude-hosts"
+    },
+    {
+      "id": "openai",
+      "name": {
+        "zh": "OpenAI 官方 API",
+        "en": "OpenAI API"
+      }
+    },
+    {
+      "id": "deepseek",
+      "name": {
+        "zh": "DeepSeek 官方 API",
+        "en": "DeepSeek API"
+      }
+    },
+    {
+      "id": "moonshot",
+      "name": {
+        "zh": "Kimi 官方 API",
+        "en": "Moonshot (Kimi) API"
+      }
+    },
+    {
+      "id": "vllm",
+      "name": {
+        "zh": "vLLM 自部署",
+        "en": "Self-hosted vLLM"
+      }
+    },
+    {
+      "id": "openrouter",
+      "layer": "relay",
+      "name": {
+        "zh": "OpenRouter",
+        "en": "OpenRouter"
+      }
+    }
+  ],
+  "signals": [
+    {
+      "id": "or-gen-id",
+      "field": "id",
+      "op": "regex",
+      "value": "^gen-\\d{10}-[A-Za-z0-9]{20}$",
+      "channel": "openrouter",
+      "weight": 3,
+      "note": {
+        "zh": "响应 ID 为 OpenRouter 的 gen- 格式",
+        "en": "Response ID in OpenRouter's gen- format"
+      }
+    },
+    {
+      "id": "bedrock-arn",
+      "field": "echo",
+      "op": "regex",
+      "value": "^arn:aws:bedrock:",
+      "channel": "bedrock",
+      "weight": 4,
+      "note": {
+        "zh": "返回的模型标识为 AWS Bedrock ARN",
+        "en": "Reported model identifier is an AWS Bedrock ARN"
+      }
+    },
+    {
+      "id": "bedrock-msg-id",
+      "field": "id",
+      "op": "prefix",
+      "value": "msg_bdrk_",
+      "channel": "bedrock",
+      "weight": 3,
+      "note": {
+        "zh": "消息 ID 为 Bedrock 的 msg_bdrk_ 格式",
+        "en": "Message ID in Bedrock's msg_bdrk_ format"
+      }
+    },
+    {
+      "id": "bedrock-tool-bdrk",
+      "field": "toolId",
+      "op": "prefix",
+      "value": "toolu_bdrk_",
+      "channel": "bedrock",
+      "weight": 3,
+      "note": {
+        "zh": "工具调用 ID 为 Bedrock 的 toolu_bdrk_ 格式",
+        "en": "Tool call ID in Bedrock's toolu_bdrk_ format"
+      }
+    },
+    {
+      "id": "bedrock-header",
+      "field": "header",
+      "op": "prefix",
+      "value": "x-amzn-bedrock-",
+      "channel": "bedrock",
+      "weight": 3,
+      "note": {
+        "zh": "响应头包含 AWS Bedrock 字段",
+        "en": "Response headers include AWS Bedrock fields"
+      }
+    },
+    {
+      "id": "cloud-tooluse",
+      "field": "toolId",
+      "op": "prefix",
+      "value": "tooluse_",
+      "channel": "cloud",
+      "weight": 2,
+      "note": {
+        "zh": "工具调用 ID 为 tooluse_ 格式（Bedrock / Kiro / Vertex / Antigravity 类）",
+        "en": "Tool call ID in tooluse_ format (Bedrock / Kiro / Vertex / Antigravity type)"
+      }
+    },
+    {
+      "id": "vertex-msg-id",
+      "field": "id",
+      "op": "regex",
+      "value": "^(msg|req)_vrtx_",
+      "channel": "vertex",
+      "weight": 3,
+      "note": {
+        "zh": "消息 ID 为 Vertex 的 vrtx 格式",
+        "en": "Message ID in Vertex's vrtx format"
+      }
+    },
+    {
+      "id": "vertex-tool-vrtx",
+      "field": "toolId",
+      "op": "prefix",
+      "value": "toolu_vrtx_",
+      "channel": "vertex",
+      "weight": 3,
+      "note": {
+        "zh": "工具调用 ID 为 Vertex 的 toolu_vrtx_ 格式",
+        "en": "Tool call ID in Vertex's toolu_vrtx_ format"
+      }
+    },
+    {
+      "id": "vertex-signature",
+      "field": "signature",
+      "op": "prefix",
+      "value": "claude#",
+      "channel": "vertex",
+      "weight": 3,
+      "note": {
+        "zh": "思考签名以 claude# 开头（Vertex / Antigravity）",
+        "en": "Thinking signature prefixed claude# (Vertex / Antigravity)"
+      }
+    },
+    {
+      "id": "anthropic-tool-id",
+      "field": "toolId",
+      "op": "regex",
+      "value": "^toolu_01[A-Za-z0-9]{20,}$",
+      "channel": "anthropic",
+      "weight": 2,
+      "note": {
+        "zh": "工具调用 ID 为 Anthropic 的 toolu_01 格式",
+        "en": "Tool call ID in Anthropic's toolu_01 format"
+      }
+    },
+    {
+      "id": "anthropic-msg-id",
+      "field": "id",
+      "op": "regex",
+      "value": "^msg_01[A-Za-z0-9]{20,}$",
+      "channel": "anthropic",
+      "weight": 2,
+      "note": {
+        "zh": "消息 ID 为 Anthropic 的 msg_01 格式",
+        "en": "Message ID in Anthropic's msg_01 format"
+      }
+    },
+    {
+      "id": "anthropic-ratelimit",
+      "field": "header",
+      "op": "prefix",
+      "value": "anthropic-ratelimit-",
+      "channel": "anthropic",
+      "weight": 4,
+      "note": {
+        "zh": "响应头包含 Anthropic 限流字段",
+        "en": "Response headers include Anthropic rate-limit fields"
+      }
+    },
+    {
+      "id": "openai-resp-id",
+      "field": "id",
+      "op": "regex",
+      "value": "^resp_[0-9a-f]{40,}$",
+      "weight": 2,
+      "note": {
+        "zh": "响应 ID 为 Responses 风格的 resp_ 格式（部分网关对所有模型均采用此格式，不作为上游判定依据）",
+        "en": "Response ID in the Responses-style resp_ format (some gateways use it for every model; not used to identify the upstream)"
+      }
+    },
+    {
+      "id": "openai-chat-id",
+      "field": "id",
+      "op": "regex",
+      "value": "^chatcmpl-[A-Za-z0-9]{29}$",
+      "weight": 1,
+      "note": {
+        "zh": "响应 ID 为 OpenAI 的 chatcmpl- 格式（多数网关采用此格式，不作为上游判定依据）",
+        "en": "Response ID in OpenAI's chatcmpl- format (used by many gateways; not used to identify the upstream)"
+      }
+    },
+    {
+      "id": "openai-header",
+      "field": "header",
+      "op": "regex",
+      "value": "^openai-(processing-ms|organization|project|version)$",
+      "channel": "openai",
+      "weight": 4,
+      "note": {
+        "zh": "响应头包含 OpenAI 字段",
+        "en": "Response headers include OpenAI fields"
+      }
+    },
+    {
+      "id": "openai-fingerprint",
+      "field": "fingerprint",
+      "op": "regex",
+      "value": "^fp_[0-9a-f]{10}$",
+      "weight": 1,
+      "note": {
+        "zh": "system_fingerprint 为 OpenAI 的 fp_ 格式（多数网关可生成，不作为上游判定依据）",
+        "en": "system_fingerprint in OpenAI's fp_ format (many gateways generate it; not used to identify the upstream)"
+      }
+    },
+    {
+      "id": "deepseek-tool-id",
+      "field": "toolId",
+      "op": "prefix",
+      "value": "call_00_",
+      "channel": "deepseek",
+      "weight": 3,
+      "note": {
+        "zh": "工具调用 ID 为 DeepSeek 的 call_00_ 格式",
+        "en": "Tool call ID in DeepSeek's call_00_ format"
+      }
+    },
+    {
+      "id": "deepseek-fingerprint",
+      "field": "fingerprint",
+      "op": "regex",
+      "value": "^fp_[0-9a-f]{10}_prod",
+      "channel": "deepseek",
+      "weight": 3,
+      "note": {
+        "zh": "system_fingerprint 为 DeepSeek 格式",
+        "en": "system_fingerprint in DeepSeek's format"
+      }
+    },
+    {
+      "id": "moonshot-tool-id",
+      "field": "toolId",
+      "op": "regex",
+      "value": "^functions\\.[A-Za-z0-9_-]+:\\d+$",
+      "channel": "moonshot",
+      "weight": 3,
+      "note": {
+        "zh": "工具调用 ID 为 Kimi 的 functions.名称:序号 格式",
+        "en": "Tool call ID in Kimi's functions.name:index format"
+      }
+    },
+    {
+      "id": "vllm-tool-id",
+      "field": "toolId",
+      "op": "regex",
+      "value": "^chatcmpl-tool-[0-9a-f]{32}$",
+      "channel": "vllm",
+      "weight": 3,
+      "note": {
+        "zh": "工具调用 ID 为 vLLM 的 chatcmpl-tool- 格式（自部署开源模型）",
+        "en": "Tool call ID in vLLM's chatcmpl-tool- format (self-hosted open model)"
+      }
+    }
+  ],
+  "stubs": [
+    {
+      "id": "no-longer-available",
+      "value": "\\bis no longer available\\b",
+      "maxChars": 200,
+      "note": {
+        "zh": "响应为「…is no longer available」类固定提示",
+        "en": "The response is a canned \"… is no longer available\" notice"
+      }
+    },
+    {
+      "id": "model-offline-zh",
+      "value": "(该|此|当前)模型(已下线|已停用|不可用|暂不可用|维护中)",
+      "maxChars": 200,
+      "note": {
+        "zh": "响应为「模型已下线 / 不可用」类固定提示",
+        "en": "The response is a canned \"model unavailable\" notice (Chinese)"
+      }
+    },
+    {
+      "id": "no-channel",
+      "value": "(no available channel|无可用渠道|没有可用渠道|暂无可用渠道)",
+      "maxChars": 200,
+      "note": {
+        "zh": "响应为中转站「无可用渠道」提示",
+        "en": "The response is a relay's \"no channel available\" notice"
+      }
+    },
+    {
+      "id": "accounts-exhausted",
+      "value": "all available accounts (are exhausted|exhausted)",
+      "maxChars": 200,
+      "note": {
+        "zh": "响应为中转站「账号池耗尽」提示",
+        "en": "The response is a relay's \"accounts exhausted\" notice"
+      }
+    }
+  ],
+  "families": [
+    {
+      "id": "claude",
+      "match": "claude|anthropic",
+      "tiers": [
+        "opus",
+        "sonnet",
+        "haiku",
+        "fable",
+        "mythos"
+      ],
+      "cpt": {
+        "en": [
+          2.3,
+          3.7
+        ],
+        "zh": [
+          0.7,
+          1.12
+        ]
+      },
+      "accountBound": "(sonnet|haiku)-5[-.]5",
+      "name": {
+        "zh": "Claude",
+        "en": "Claude"
+      }
+    },
+    {
+      "id": "gpt",
+      "match": "gpt|chatgpt|openai|^o[1-9]",
+      "tiers": [
+        "mini",
+        "nano",
+        "pro"
+      ],
+      "cpt": {
+        "en": [
+          4,
+          5.6
+        ],
+        "zh": [
+          0.95,
+          1.45
+        ]
+      },
+      "name": {
+        "zh": "GPT",
+        "en": "GPT"
+      }
+    },
+    {
+      "id": "gemini",
+      "match": "gemini",
+      "tiers": [
+        "pro",
+        "flash",
+        "lite"
+      ],
+      "name": {
+        "zh": "Gemini",
+        "en": "Gemini"
+      }
+    },
+    {
+      "id": "deepseek",
+      "match": "deepseek",
+      "tiers": [
+        "pro",
+        "flash"
+      ],
+      "cpt": {
+        "en": [
+          4.2,
+          5.9
+        ],
+        "zh": [
+          1.3,
+          1.95
+        ]
+      },
+      "name": {
+        "zh": "DeepSeek",
+        "en": "DeepSeek"
+      }
+    },
+    {
+      "id": "kimi",
+      "match": "kimi|moonshot",
+      "cpt": {
+        "en": [
+          4.2,
+          5.9
+        ],
+        "zh": [
+          1.4,
+          2.05
+        ]
+      },
+      "name": {
+        "zh": "Kimi",
+        "en": "Kimi"
+      }
+    },
+    {
+      "id": "glm",
+      "match": "glm|zhipu|z-ai|chatglm",
+      "name": {
+        "zh": "GLM",
+        "en": "GLM"
+      },
+      "cpt": {
+        "en": [
+          4.2,
+          5.9
+        ],
+        "zh": [
+          1.3,
+          1.85
+        ]
+      }
+    },
+    {
+      "id": "qwen",
+      "match": "qwen|qwq",
+      "name": {
+        "zh": "通义千问",
+        "en": "Qwen"
+      }
+    },
+    {
+      "id": "minimax",
+      "match": "minimax|abab",
+      "name": {
+        "zh": "MiniMax",
+        "en": "MiniMax"
+      },
+      "cpt": {
+        "en": [
+          4.3,
+          6
+        ],
+        "zh": [
+          1.35,
+          1.95
+        ]
+      }
+    },
+    {
+      "id": "grok",
+      "match": "grok|x-ai",
+      "name": {
+        "zh": "Grok",
+        "en": "Grok"
+      }
+    },
+    {
+      "id": "llama",
+      "match": "llama",
+      "name": {
+        "zh": "Llama",
+        "en": "Llama"
+      }
+    },
+    {
+      "id": "mistral",
+      "match": "mistral|mixtral|codestral|devstral|magistral",
+      "name": {
+        "zh": "Mistral",
+        "en": "Mistral"
+      }
+    },
+    {
+      "id": "mimo",
+      "match": "mimo",
+      "name": {
+        "zh": "MiMo",
+        "en": "MiMo"
+      },
+      "cpt": {
+        "en": [
+          4.1,
+          5.9
+        ],
+        "zh": [
+          1.25,
+          1.75
+        ]
+      }
+    },
+    {
+      "id": "hunyuan",
+      "match": "hunyuan|\\bhy\\d",
+      "name": {
+        "zh": "混元",
+        "en": "Hunyuan"
+      }
+    }
+  ],
+  "thresholds": {},
+  "probes": {
+    "echo": {
+      "phrasings": {
+        "en": [
+          "Reply with one short sentence about {topic}.",
+          "Write one sentence describing {topic}.",
+          "In one sentence, tell me something about {topic}."
+        ],
+        "zh": [
+          "用一句话说说{topiczh}。",
+          "请用一句话描述{topiczh}。",
+          "关于{topiczh}，用一句话讲一点。"
+        ]
+      },
+      "slots": {
+        "topic": [
+          "the ocean",
+          "autumn leaves",
+          "a lighthouse",
+          "fresh coffee",
+          "a mountain trail",
+          "a quiet library",
+          "summer rain",
+          "an old bicycle",
+          "the night sky",
+          "a busy market"
+        ],
+        "topiczh": [
+          "大海",
+          "秋天的落叶",
+          "灯塔",
+          "刚煮好的咖啡",
+          "山间小路",
+          "安静的图书馆",
+          "夏天的雨",
+          "一辆旧自行车",
+          "夜空",
+          "热闹的集市"
+        ]
+      }
+    },
+    "maxtokens": {
+      "phrasings": {
+        "en": [
+          "List the whole numbers from 1 to {top}, separated by spaces.",
+          "Write every whole number from 1 up to {top}, one after another with spaces."
+        ],
+        "zh": [
+          "把 1 到 {top} 的整数依次写出来，用空格隔开。"
+        ]
+      },
+      "slots": {
+        "top": [
+          "60",
+          "80",
+          "100"
+        ]
+      }
+    },
+    "stop": {
+      "phrasings": {
+        "en": [
+          "Count from 1 to 15, separated by spaces, and write nothing else.",
+          "Write the numbers 1 through 15 separated by single spaces and nothing more."
+        ],
+        "zh": [
+          "从 1 数到 15，数字之间用空格隔开，不要写别的。"
+        ]
+      }
+    },
+    "tool": {
+      "phrasings": {
+        "en": [
+          "What is the weather in {city} right now? Use the tool.",
+          "Check the current weather in {city} with the tool."
+        ],
+        "zh": [
+          "{cityzh}现在天气怎么样？请调用工具查询。",
+          "用工具查一下{cityzh}现在的天气。"
+        ]
+      },
+      "slots": {
+        "city": [
+          "Lisbon",
+          "Osaka",
+          "Toronto",
+          "Nairobi",
+          "Hamburg",
+          "Lima",
+          "Hanoi",
+          "Perth"
+        ],
+        "cityzh": [
+          "成都",
+          "青岛",
+          "昆明",
+          "厦门",
+          "哈尔滨",
+          "西安",
+          "南宁",
+          "兰州"
+        ]
+      }
+    },
+    "image": {
+      "phrasings": {
+        "en": [
+          "What single color fills this image? Answer with one word.",
+          "Name the color of this image in one word."
+        ],
+        "zh": [
+          "这张图片是什么颜色？只回答一个词。"
+        ]
+      },
+      "expect": [
+        "red",
+        "红"
+      ]
+    },
+    "signature": {
+      "phrasings": {
+        "en": [
+          "How many positive integers below {n} are divisible by {a} or by {b} but not by both? Think it through, then give the number only.",
+          "Count the positive integers less than {n} that are multiples of {a} or of {b}, but not of both. Work it out, then reply with the number only."
+        ]
+      },
+      "slots": {
+        "n": [
+          "500",
+          "700",
+          "900",
+          "1000",
+          "1200"
+        ],
+        "a": [
+          "6",
+          "7",
+          "9"
+        ],
+        "b": [
+          "11",
+          "13"
+        ]
+      }
+    },
+    "followup": {
+      "phrasings": {
+        "en": [
+          "Reply with exactly: OK"
+        ]
+      }
+    }
+  },
+  "identity": {
+    "tokenizer": {
+      "base": "Reply with the single word OK.",
+      "probe": "The quick brown fox jumps over the lazy dog 1234567890. 敏捷的棕色狐狸跳过了懒狗，然后去了北京和上海。function add(a, b) { return a + b; } // 🚀✨ https://example.com/path?query=value&x=42 Ünïcödé façade naïve résumé",
+      "maxTokens": 16,
+      "tolerance": 0,
+      "groups": [
+        {
+          "id": "claude-46",
+          "family": "claude",
+          "delta": 102,
+          "match": "(opus|sonnet)[-_. ]?4[-_.]6",
+          "name": {
+            "zh": "Claude 旧版分词器（4.6 代及更早）",
+            "en": "Claude's older tokenizer (4.6 and earlier)"
+          }
+        },
+        {
+          "id": "claude-47",
+          "family": "claude",
+          "delta": 109,
+          "match": "(opus|sonnet|haiku)[-_.]?5[-_.]5|(opus|sonnet)[-_.]?5([-_@:][a-z2]|$)|opus[-_.]?4[-_.][78]|fable",
+          "name": {
+            "zh": "Claude 新版分词器（Opus 4.7 起，含 5 代）",
+            "en": "Claude's newer tokenizer (Opus 4.7 onward, incl. the 5 generation)"
+          }
+        },
+        {
+          "id": "deepseek-v4",
+          "family": "deepseek",
+          "delta": 73,
+          "match": "deepseek[-_.]?v4",
+          "name": {
+            "zh": "DeepSeek V4",
+            "en": "DeepSeek V4"
+          }
+        },
+        {
+          "id": "glm-5",
+          "family": "glm",
+          "delta": 78,
+          "match": "glm[-_.]?5",
+          "name": {
+            "zh": "GLM-5",
+            "en": "GLM-5"
+          }
+        },
+        {
+          "id": "gpt-6",
+          "family": "gpt",
+          "delta": 72,
+          "match": "gpt[-_.]?6",
+          "name": {
+            "zh": "GPT-6",
+            "en": "GPT-6"
+          }
+        },
+        {
+          "id": "kimi-k2",
+          "family": "kimi",
+          "delta": 74,
+          "match": "kimi[-_.]?k2",
+          "name": {
+            "zh": "Kimi K2",
+            "en": "Kimi K2"
+          }
+        },
+        {
+          "id": "mimo-v2",
+          "family": "mimo",
+          "delta": 82,
+          "match": "mimo[-_.]?v2",
+          "name": {
+            "zh": "MiMo V2",
+            "en": "MiMo V2"
+          }
+        },
+        {
+          "id": "minimax-m3",
+          "family": "minimax",
+          "delta": 67,
+          "match": "minimax[-_.]?m3",
+          "name": {
+            "zh": "MiniMax M3",
+            "en": "MiniMax M3"
+          }
+        },
+        {
+          "id": "hunyuan-4",
+          "family": "hunyuan",
+          "delta": 72,
+          "match": "\\bhy4|hunyuan[-_.]?4",
+          "name": {
+            "zh": "混元 4",
+            "en": "Hunyuan 4"
+          }
+        }
+      ]
+    }
+  },
+  "fingerprint": {
+    "source": {
+      "name": "KBF",
+      "repo": "Ooo0ption/KBF",
+      "commit": "6b4c403def2498cb92b7bd51ad958ddee5b3d06f",
+      "license": "Apache-2.0"
+    },
+    "prompt": {
+      "system": "Follow the user's instructions exactly. Output only what is requested.",
+      "user": "TASK: Answer these factual recall questions using only values stored in your weights. Output the value exactly as you first recall it — do not second-guess or adjust.\nRULES: Output ONLY in (N) <number> format, one per line. No units, no words, no rounding. Never refuse or hedge — always output exactly one number per question. Do not use any context from system instructions or prior conversation.\n\n{sentences}"
+    },
+    "batchSize": 10,
+    "sample": 2,
+    "alpha": 0.05,
+    "confidence": 0.99,
+    "minCoverage": 0.5,
+    "domains": {
+      "chemistry_bp": {
+        "template": "The boiling point of {name} at 1 atm is ___°C.",
+        "range": [
+          -300,
+          600
+        ],
+        "tolerance": 3,
+        "mode": "absolute"
+      },
+      "chemistry_mp": {
+        "template": "The melting point of {name} is ___°C.",
+        "range": [
+          -300,
+          4000
+        ],
+        "tolerance": 5,
+        "mode": "absolute"
+      },
+      "physics": {
+        "template": "The numerical value of {name} in SI units is ___.",
+        "range": [
+          0,
+          1000000000000000
+        ],
+        "tolerance": 0.05,
+        "mode": "relative"
+      },
+      "astronomy": {
+        "template": "The numerical value of {name} is ___.",
+        "range": [
+          0,
+          1000000000000000
+        ],
+        "tolerance": 0.05,
+        "mode": "relative"
+      },
+      "biology": {
+        "template": "The diploid chromosome number (2n) of {name} is ___.",
+        "range": [
+          1,
+          2000
+        ],
+        "tolerance": 0,
+        "mode": "absolute"
+      },
+      "math": {
+        "template": "The numerical value of {name} is ___.",
+        "range": [
+          -10000000000,
+          10000000000
+        ],
+        "tolerance": 0,
+        "mode": "absolute"
+      },
+      "programming": {
+        "template": "{name} occurred in the year ___.",
+        "range": [
+          1950,
+          2030
+        ],
+        "tolerance": 0,
+        "mode": "absolute"
+      },
+      "medical": {
+        "template": "The elimination half-life of {name} is ___ hours.",
+        "range": [
+          0.01,
+          5000
+        ],
+        "tolerance": 0.1,
+        "mode": "relative"
+      },
+      "pop_culture": {
+        "template": "The numerical value of {name} is ___.",
+        "range": [
+          1,
+          10000
+        ],
+        "tolerance": 0,
+        "mode": "absolute"
+      },
+      "internet_culture": {
+        "template": "The numerical value of {name} is ___.",
+        "range": [
+          1,
+          2030
+        ],
+        "tolerance": 0,
+        "mode": "absolute"
+      },
+      "chinese_history": {
+        "template": "{name}发生在公元___年。",
+        "range": [
+          -3000,
+          2030
+        ],
+        "tolerance": 0,
+        "mode": "absolute"
+      },
+      "chinese_geography": {
+        "template": "{name}的数值是___。",
+        "range": [
+          1,
+          1000000000
+        ],
+        "tolerance": 0.05,
+        "mode": "relative"
+      },
+      "chinese_internet": {
+        "template": "{name}发生在___年。",
+        "range": [
+          1990,
+          2030
+        ],
+        "tolerance": 0,
+        "mode": "absolute"
+      },
+      "chinese_literature": {
+        "template": "{name}的数值是___。",
+        "range": [
+          -3000,
+          2030
+        ],
+        "tolerance": 0,
+        "mode": "absolute"
+      },
+      "crypto_params": {
+        "template": "The numerical value of {name} is ___.",
+        "range": [
+          0,
+          10000000000
+        ],
+        "tolerance": 0,
+        "mode": "absolute"
+      }
+    },
+    "sets": [
+      {
+        "id": "claude-fable-5-1-20260911",
+        "model": "anthropic/claude-fable-5.1",
+        "name": "Claude Fable 5.1",
+        "match": "fable[-_.]?5[-_.]1",
+        "path": "probes/reference_202609/claude-fable-5.1_20260911.json",
+        "sha256": "1f83c441fde3c39e5357f654154b738ca51de52bdf0fa189f335107c3683927f",
+        "bytes": 171426,
+        "probes": 453,
+        "requests": 29,
+        "date": "2026-09-11",
+        "self": {
+          "hamming": 12,
+          "total": 453
+        }
+      },
+      {
+        "id": "claude-opus-4-6-20260912",
+        "model": "anthropic/claude-opus-4.6",
+        "name": "Claude Opus 4.6",
+        "match": "opus[-_.]?4[-_.]6",
+        "path": "probes/reference_202609/claude-opus-4.6_20260912.json",
+        "sha256": "d7271a985ee005944508c8988b1589f5eb3995abce5d1ca1db65d8740b36d08f",
+        "bytes": 166739,
+        "probes": 445,
+        "requests": 30,
+        "date": "2026-09-12",
+        "self": {
+          "hamming": 23,
+          "total": 445
+        }
+      },
+      {
+        "id": "claude-opus-5-20260911",
+        "model": "anthropic/claude-opus-5",
+        "name": "Claude Opus 5",
+        "match": "opus[-_.]?5([-_@:][a-z2]|$)",
+        "path": "probes/reference_202609/claude-opus-5_20260911.json",
+        "sha256": "0dab27924152f579397676d27b14b4bccadaac64b7d6f1b874f56edab7bab59f",
+        "bytes": 159917,
+        "probes": 414,
+        "requests": 29,
+        "date": "2026-09-11",
+        "self": {
+          "hamming": 7,
+          "total": 414
+        }
+      },
+      {
+        "id": "claude-sonnet-4-6-20260912",
+        "model": "anthropic/claude-sonnet-4.6",
+        "name": "Claude Sonnet 4.6",
+        "match": "sonnet[-_.]?4[-_.]6",
+        "path": "probes/reference_202609/claude-sonnet-4.6_20260912.json",
+        "sha256": "aedd36f852d3a0a3c4b6a4522373c9380ffddadd9db416e2dec478b8aabacfb9",
+        "bytes": 166740,
+        "probes": 436,
+        "requests": 29,
+        "date": "2026-09-12",
+        "self": {
+          "hamming": 28,
+          "total": 435
+        }
+      },
+      {
+        "id": "deepseek-v3-2-20260912",
+        "model": "deepseek/deepseek-v3.2",
+        "name": "deepseek-v3.2",
+        "match": "deepseek[-_.]?v3[-_.]2",
+        "path": "probes/reference_202609/deepseek-v3.2_20260912.json",
+        "sha256": "7463bc31d582ec087a7783688561b79c7ebc04b2e4eba80ff18e16b32499a090",
+        "bytes": 148425,
+        "probes": 380,
+        "requests": 26,
+        "date": "2026-09-12",
+        "self": {
+          "hamming": 23,
+          "total": 380
+        }
+      },
+      {
+        "id": "deepseek-v4-pro-0813-20260911",
+        "model": "deepseek/deepseek-v4-pro-0813",
+        "name": "deepseek-v4-pro-0813",
+        "match": "deepseek[-_.]?v4[-_.]?pro",
+        "path": "probes/reference_202609/deepseek-v4-pro-0813_20260911.json",
+        "sha256": "9148b3004f59376468bc8d3d40e0d865eda2cde801f476780c3e46fdd26364b6",
+        "bytes": 203745,
+        "probes": 557,
+        "requests": 36,
+        "date": "2026-09-11",
+        "self": {
+          "hamming": 34,
+          "total": 557
+        }
+      },
+      {
+        "id": "deepseek-v4-1-flash-20260911",
+        "model": "deepseek/deepseek-v4.1-flash",
+        "name": "deepseek-v4.1-flash",
+        "match": "deepseek[-_.]?v4[-_.]1[-_.]?flash($|[-_@:]0)",
+        "path": "probes/reference_202609/deepseek-v4.1-flash_20260911.json",
+        "sha256": "91bafbe9bf2f8e2182ed93e6aeffb55d0220505dd86467a199672e125113fc9d",
+        "bytes": 141262,
+        "probes": 363,
+        "requests": 26,
+        "date": "2026-09-11",
+        "self": {
+          "hamming": 29,
+          "total": 363
+        }
+      },
+      {
+        "id": "gemini-2-5-flash-lite-20260918",
+        "model": "google/gemini-2.5-flash-lite",
+        "name": "gemini-2.5-flash-lite",
+        "match": "gemini[-_.]?2[-_.]5[-_.]?flash[-_.]?lite",
+        "path": "probes/reference_202609/gemini-2.5-flash-lite_20260918.json",
+        "sha256": "2e69a34775852a3765aaef85221e17b0f8ce21750ded04e88f5392faf3b9ed75",
+        "bytes": 123871,
+        "probes": 319,
+        "requests": 23,
+        "date": "2026-09-18",
+        "self": {
+          "hamming": 34,
+          "total": 319
+        }
+      },
+      {
+        "id": "gemini-3-flash-preview-20260912",
+        "model": "google/gemini-3-flash-preview",
+        "name": "gemini-3-flash-preview",
+        "match": "gemini[-_.]?3[-_.]?flash",
+        "path": "probes/reference_202609/gemini-3-flash-preview_20260912.json",
+        "sha256": "28df39779c9d2a4cc50f294f0581b05f4b334173bcbe72e47172def5f3f12a69",
+        "bytes": 157029,
+        "probes": 409,
+        "requests": 28,
+        "date": "2026-09-12",
+        "self": {
+          "hamming": 21,
+          "total": 409
+        }
+      },
+      {
+        "id": "glm-4-7-20260913",
+        "model": "z-ai/glm-4.7",
+        "name": "glm-4.7",
+        "match": "glm[-_.]?4[-_.]7($|[@:])",
+        "path": "probes/reference_202609/glm-4.7_20260913.json",
+        "sha256": "0c77d23b710acafb9c7cbfa050654e996e9af6fae104ee95b68530725f304a51",
+        "bytes": 161190,
+        "probes": 430,
+        "requests": 29,
+        "date": "2026-09-13",
+        "self": {
+          "hamming": 33,
+          "total": 428
+        }
+      },
+      {
+        "id": "glm-5-3-20260911",
+        "model": "z-ai/glm-5.3",
+        "name": "glm-5.3",
+        "match": "glm[-_.]?5[-_.]3($|[@:])",
+        "path": "probes/reference_202609/glm-5.3_20260911.json",
+        "sha256": "beed8c61316f5697dff1cb6b5385d10bd3ecbfd0047b437deaa9152e6facd4fb",
+        "bytes": 144065,
+        "probes": 372,
+        "requests": 25,
+        "date": "2026-09-11",
+        "self": {
+          "hamming": 27,
+          "total": 372
+        }
+      },
+      {
+        "id": "glm-5-20260912",
+        "model": "z-ai/glm-5",
+        "name": "glm-5",
+        "match": "glm[-_.]?5($|[@:])",
+        "path": "probes/reference_202609/glm-5_20260912.json",
+        "sha256": "37e7e3e3b0f383447d65c2f1cd0ce4205954401606f70223d2a75bbf7eb49134",
+        "bytes": 131722,
+        "probes": 332,
+        "requests": 24,
+        "date": "2026-09-12",
+        "self": {
+          "hamming": 22,
+          "total": 332
+        }
+      },
+      {
+        "id": "gpt-4-1-mini-20260915",
+        "model": "openai/gpt-4.1-mini",
+        "name": "gpt-4.1-mini",
+        "match": "gpt[-_.]?4[-_.]1[-_.]?mini",
+        "path": "probes/reference_202609/gpt-4.1-mini_20260915.json",
+        "sha256": "a41ca70ed1c1999ecc0c794de1700f2ec7214910e8869825b138258eeb819048",
+        "bytes": 109543,
+        "probes": 265,
+        "requests": 21,
+        "date": "2026-09-15",
+        "self": {
+          "hamming": 17,
+          "total": 265
+        }
+      },
+      {
+        "id": "gpt-4-1-nano-20260918",
+        "model": "openai/gpt-4.1-nano",
+        "name": "gpt-4.1-nano",
+        "match": "gpt[-_.]?4[-_.]1[-_.]?nano",
+        "path": "probes/reference_202609/gpt-4.1-nano_20260918.json",
+        "sha256": "561cce56050202049770f648f3083135a5870161575beb96ec8e2bf12fbace6b",
+        "bytes": 100497,
+        "probes": 248,
+        "requests": 20,
+        "date": "2026-09-18",
+        "self": {
+          "hamming": 25,
+          "total": 248
+        }
+      },
+      {
+        "id": "gpt-5-4-mini-20260916",
+        "model": "openai/gpt-5.4-mini",
+        "name": "gpt-5.4-mini",
+        "match": "gpt[-_.]?5[-_.]4[-_.]?mini",
+        "path": "probes/reference_202609/gpt-5.4-mini_20260916.json",
+        "sha256": "c54073160498592c87037292d812ffdca5e1bf34c3ca84007098589babe5f674",
+        "bytes": 83586,
+        "probes": 194,
+        "requests": 17,
+        "date": "2026-09-16",
+        "self": {
+          "hamming": 26,
+          "total": 194
+        }
+      },
+      {
+        "id": "gpt-5-4-20260913",
+        "model": "openai/gpt-5.4",
+        "name": "gpt-5.4",
+        "match": "gpt[-_.]?5[-_.]4($|[@:]|-20)",
+        "path": "probes/reference_202609/gpt-5.4_20260913.json",
+        "sha256": "109037f0d257403767f04f4eea87ea837dfd168d3c6b71f34cd71c5c967afd46",
+        "bytes": 201153,
+        "probes": 531,
+        "requests": 33,
+        "date": "2026-09-13",
+        "self": {
+          "hamming": 41,
+          "total": 530
+        }
+      },
+      {
+        "id": "gpt-5-6-luna-20260915",
+        "model": "openai/gpt-5.6-luna",
+        "name": "gpt-5.6-luna",
+        "match": "gpt[-_.]?5[-_.]6[-_.]?luna",
+        "path": "probes/reference_202609/gpt-5.6-luna_20260915.json",
+        "sha256": "e13916a13347bb64cc1a6d7c84edb08c41d78bd99eda4a4b4ac806cd07b5896d",
+        "bytes": 122263,
+        "probes": 305,
+        "requests": 22,
+        "date": "2026-09-15",
+        "self": {
+          "hamming": 23,
+          "total": 304
+        }
+      },
+      {
+        "id": "gpt-5-6-sol-20260912",
+        "model": "openai/gpt-5.6-sol",
+        "name": "gpt-5.6-sol",
+        "match": "gpt[-_.]?5[-_.]6[-_.]?sol",
+        "path": "probes/reference_202609/gpt-5.6-sol_20260912.json",
+        "sha256": "b8f88dc2e8f6e91c70fc3166b2e300502c261221d2d1bcd5fc21e6fcb0e06477",
+        "bytes": 161426,
+        "probes": 426,
+        "requests": 29,
+        "date": "2026-09-12",
+        "self": {
+          "hamming": 29,
+          "total": 426
+        }
+      },
+      {
+        "id": "gpt-6-astra-20260910",
+        "model": "openai/gpt-6-astra",
+        "name": "gpt-6-astra",
+        "match": "gpt[-_.]?6[-_.]?astra",
+        "path": "probes/reference_202609/gpt-6-astra_20260910.json",
+        "sha256": "71227dc426dddb3625bf98da884695f459f5eed7eb11b768784a7c666d94f606",
+        "bytes": 214055,
+        "probes": 538,
+        "requests": 34,
+        "date": "2026-09-10",
+        "self": {
+          "hamming": 8,
+          "total": 534
+        }
+      },
+      {
+        "id": "hy4-preview-20260911",
+        "model": "tencent/hy4-preview",
+        "name": "hy4-preview",
+        "match": "hy4[-_.]?preview",
+        "path": "probes/reference_202609/hy4-preview_20260911.json",
+        "sha256": "46f369413d5d98634b822930d3ab49f2cd3c1f70c313534b9bff9e47c16dbafb",
+        "bytes": 197354,
+        "probes": 538,
+        "requests": 35,
+        "date": "2026-09-11",
+        "self": {
+          "hamming": 31,
+          "total": 538
+        }
+      },
+      {
+        "id": "kimi-k2-0905-20260912",
+        "model": "moonshotai/kimi-k2-0905",
+        "name": "kimi-k2-0905",
+        "match": "kimi[-_.]?k2[-_.]?0905",
+        "path": "probes/reference_202609/kimi-k2-0905_20260912.json",
+        "sha256": "ea9eff671737e5608620c01e597c01ae8830049bd8c6ceaeb9db78c15d616c33",
+        "bytes": 141295,
+        "probes": 363,
+        "requests": 26,
+        "date": "2026-09-12",
+        "self": {
+          "hamming": 28,
+          "total": 360
+        }
+      },
+      {
+        "id": "kimi-k3-20260912",
+        "model": "moonshotai/kimi-k3",
+        "name": "kimi-k3",
+        "match": "kimi[-_.]?k3",
+        "path": "probes/reference_202609/kimi-k3_20260912.json",
+        "sha256": "c7c1a000fa5a2f6c8d5b012742a73105ad3ed4b8b5bfe365877c13c0fa2cf1da",
+        "bytes": 159851,
+        "probes": 424,
+        "requests": 29,
+        "date": "2026-09-12",
+        "self": {
+          "hamming": 36,
+          "total": 423
+        }
+      },
+      {
+        "id": "llama-4-scout-20260918",
+        "model": "meta-llama/llama-4-scout",
+        "name": "llama-4-scout",
+        "match": "llama[-_.]?4[-_.]?scout",
+        "path": "probes/reference_202609/llama-4-scout_20260918.json",
+        "sha256": "98799e2fbedc3054c44fe7f7fef04c773cbe09c4760a755bf306165973f177a5",
+        "bytes": 95932,
+        "probes": 231,
+        "requests": 19,
+        "date": "2026-09-18",
+        "self": {
+          "hamming": 35,
+          "total": 230
+        }
+      },
+      {
+        "id": "minimax-m3-20260911",
+        "model": "minimax/minimax-m3",
+        "name": "minimax-m3",
+        "match": "minimax[-_.]?m3($|[@:])",
+        "path": "probes/reference_202609/minimax-m3_20260911.json",
+        "sha256": "eb8f8dc875067d6e05b066c770c8d1da9b98ef9dc3204bc002b4ef2a3643d563",
+        "bytes": 124486,
+        "probes": 311,
+        "requests": 23,
+        "date": "2026-09-11",
+        "self": {
+          "hamming": 25,
+          "total": 310
+        }
+      },
+      {
+        "id": "qwen3-5-27b-20260913",
+        "model": "qwen/qwen3.5-27b",
+        "name": "qwen3.5-27b",
+        "match": "qwen[-_.]?3[-_.]5[-_.]?27b",
+        "path": "probes/reference_202609/qwen3.5-27b_20260913.json",
+        "sha256": "cc6e532cace8f2c09d803a1ccabebffbc29a5cc61691644074c071766aea59ad",
+        "bytes": 69717,
+        "probes": 149,
+        "requests": 15,
+        "date": "2026-09-13",
+        "self": {
+          "hamming": 10,
+          "total": 149
+        }
+      },
+      {
+        "id": "qwen3-5-397b-a17b-20260912",
+        "model": "qwen/qwen3.5-397b-a17b",
+        "name": "qwen3.5-397b-a17b",
+        "match": "qwen[-_.]?3[-_.]5[-_.]?397b",
+        "path": "probes/reference_202609/qwen3.5-397b-a17b_20260912.json",
+        "sha256": "dc4d11160f453e4c3f61c2491d91f3ea2230cbf4043bcf8954b3eb4ca94bb7cc",
+        "bytes": 106345,
+        "probes": 254,
+        "requests": 19,
+        "date": "2026-09-12",
+        "self": {
+          "hamming": 16,
+          "total": 254
+        }
+      },
+      {
+        "id": "qwen3-5-9b-20260913",
+        "model": "qwen/qwen3.5-9b",
+        "name": "qwen3.5-9b",
+        "match": "qwen[-_.]?3[-_.]5[-_.]?9b",
+        "path": "probes/reference_202609/qwen3.5-9b_20260913.json",
+        "sha256": "2680584603522140ffda2daff6eb1f52025adb251013590961377bf96765494c",
+        "bytes": 102661,
+        "probes": 240,
+        "requests": 20,
+        "date": "2026-09-13",
+        "self": {
+          "hamming": 12,
+          "total": 240
+        }
+      },
+      {
+        "id": "seed-2-1-turbo-20260911",
+        "model": "bytedance-seed/seed-2-1-turbo",
+        "name": "seed-2-1-turbo",
+        "match": "seed[-_.]?2[-_.]1[-_.]?turbo",
+        "path": "probes/reference_202609/seed-2-1-turbo_20260911.json",
+        "sha256": "f60e1859fedb69f655b26d4dedf93d88e8c1949cba1174dcbfbee9f92ef098f6",
+        "bytes": 155651,
+        "probes": 400,
+        "requests": 28,
+        "date": "2026-09-11",
+        "self": {
+          "hamming": 24,
+          "total": 399
+        }
+      }
+    ]
+  }
+}

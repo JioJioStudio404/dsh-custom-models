@@ -52,7 +52,8 @@ function reasoningOf(model) {
 function flagsOf(model) {
   const compat = model.compat ?? {};
   const flags = {};
-  if (compat.forceAdaptiveThinking || compat.supportsMidConvoEffort) flags.adaptive = true;
+  // Claude's adaptive thinking; on OpenAI Responses (GPT-6, pi-ai 1.3.0) mid-conversation effort is another thing.
+  if (compat.forceAdaptiveThinking || (compat.supportsMidConvoEffort && model.api === "anthropic-messages")) flags.adaptive = true;
   if (compat.supportsTemperature === false) flags.noTemperature = true;
   if (compat.maxTokensField && compat.maxTokensField !== "max_tokens") flags.maxTokensField = compat.maxTokensField;
   if (compat.requiresReasoningContentOnAssistantMessages) flags.reasoningOnAssistant = true;

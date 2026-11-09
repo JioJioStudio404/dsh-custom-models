@@ -2,39 +2,58 @@
 // Rebuild lib/vendor/pi-ai.mjs: the three wire protocols DeepSeek Harness's own custom gateway
 // (@deepseek-ai/dsh-llm-pi-ai) serves — OpenAI Chat Completions, OpenAI Responses and Anthropic
 // Messages — from the same @earendil-works/pi-ai release DSH ships, with the patch DSH applies
-// to it (scripts/pi-ai-1.1.0-dsh.patch, from deepseek-harness tag dsh-v0.2.1-rc.3: no O(n²)
-// re-parse of streamed tool arguments), bundled into one file with the vendors' SDKs they use.
+// to it (scripts/pi-ai-1.3.0-dsh.patch, from deepseek-harness tag dsh-v0.2.2-rc.1: no O(n²)
+// re-parse of streamed tool arguments; Gemini's thought signature on a Chat Completions tool call
+// kept and sent back), plus this plugin's own (scripts/pi-ai-1.3.0-custom.patch: a parallel tool call a relay
+// numbers like the one before it, with its own id, is a call of its own), bundled into one file with the
+// vendors' SDKs they use.
 //
 //   node scripts/build-vendor.mjs [work-dir]
 //
-// Needs network access (npm) and git (to apply the patch). Review the diff before committing.
+// Needs network access (npm). The patch is applied here (no git). Review the diff before committing.
 import { execFileSync } from "node:child_process";
 import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const PI_AI = "1.1.0";
+const PI_AI = "1.3.0";
 const ESBUILD = "0.25.10";
 const root = fileURLToPath(new URL("..", import.meta.url));
 const work = process.argv[2] ?? mkdtempSync(join(tmpdir(), "custom-models-vendor-"));
-// npm is a .cmd script on Windows (a shell is needed); node and git are run directly (paths may hold spaces).
+// npm is a .cmd script on Windows (a shell is needed); node is run directly (its path may hold spaces).
 const run = (command, args, cwd = work) => execFileSync(command, args, { cwd, stdio: "inherit", shell: command === "npm" && process.platform === "win32" });
+
+/**
+ * Apply a git-style unified diff (DSH's patches) under `dir`. Each hunk's old text must occur exactly
+ * once in its file and is replaced by its new text; a hunk whose new text is already there (a re-run in
+ * the same work dir) is left alone. Anything else stops the build.
+ */
+function applyPatch(file, dir) {
+  const sections = readFileSync(file, "utf8").replace(/\r\n/g, "\n").split(/^diff --git .*\n/m).slice(1);
+  for (const section of sections) {
+    const target = /^\+\+\+ b\/(.+)$/m.exec(section)?.[1];
+    if (!target) throw new Error(`${file}: a file without a target`);
+    const path = join(dir, target);
+    let text = readFileSync(path, "utf8");
+    for (const hunk of section.split(/^@@ .*\n/m).slice(1)) {
+      const lines = hunk.split("\n").filter((line) => line !== "" && !line.startsWith("\\"));
+      const before = lines.filter((line) => !line.startsWith("+")).map((line) => line.slice(1)).join("\n");
+      const after = lines.filter((line) => !line.startsWith("-")).map((line) => line.slice(1)).join("\n");
+      const count = text.split(before).length - 1;
+      if (count === 1) text = text.replace(before, () => after);
+      else if (count > 1 || !text.includes(after)) throw new Error(`${file}: a hunk of ${target} does not apply (${count} matches)`);
+    }
+    writeFileSync(path, text);
+  }
+}
 
 mkdirSync(work, { recursive: true });
 writeFileSync(join(work, "package.json"), JSON.stringify({ name: "custom-models-vendor", private: true, type: "module" }));
 run("npm", ["install", "--no-audit", "--no-fund", `@earendil-works/pi-ai@${PI_AI}`, `esbuild@${ESBUILD}`]);
-const patch = join(root, "scripts", "pi-ai-1.1.0-dsh.patch");
-const piDir = join(work, "node_modules", "@earendil-works", "pi-ai");
-let patched = false;
-try {
-  // Already applied (a re-run in the same work dir): the reverse applies cleanly.
-  execFileSync("git", ["apply", "-p1", "--reverse", "--check", patch], { cwd: piDir, stdio: "ignore" });
-  patched = true;
-} catch {
-  /* not applied yet */
-}
-if (!patched) run("git", ["apply", "-p1", patch], piDir);
+applyPatch(join(root, "scripts", `pi-ai-${PI_AI}-dsh.patch`), join(work, "node_modules", "@earendil-works", "pi-ai"));
+// This plugin's own, after DSH's: what relays send that DSH's providers never do (a parallel call under a used index).
+applyPatch(join(root, "scripts", `pi-ai-${PI_AI}-custom.patch`), join(work, "node_modules", "@earendil-works", "pi-ai"));
 writeFileSync(join(work, "entry.mjs"), [
   'export { openAICompletionsApi } from "@earendil-works/pi-ai/api/openai-completions.lazy";',
   'export { openAIResponsesApi } from "@earendil-works/pi-ai/api/openai-responses.lazy";',

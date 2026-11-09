@@ -1,0 +1,31 @@
+diff --git a/dist/api/openai-completions.js b/dist/api/openai-completions.js
+--- a/dist/api/openai-completions.js
++++ b/dist/api/openai-completions.js
+@@ -297,5 +297,14 @@
+                 const streamIndex = typeof toolCall.index === "number" ? toolCall.index : undefined;
+                 const name = toolCall.function?.name ?? toolCall.custom?.name ?? "";
+                 let block = streamIndex !== undefined ? toolCallBlocksByIndex.get(streamIndex) : undefined;
++                // dsh-custom-models: a relay that numbers every parallel call 0 still gives each its own id and
++                // name (a relay station's model, 2026-11-06): a new named id under a used index, once the call
++                // there holds complete arguments, is a new call.
++                if (block && toolCall.id && block.id && block.id !== toolCall.id && name) {
++                    try {
++                        if (typeof JSON.parse(block.partialArgs ?? "") === "object") block = undefined;
++                    }
++                    catch { /* still streaming: the same call */ }
++                }
+                 if (!block && toolCall.id) {
+                     block = toolCallBlocksById.get(toolCall.id);
+                 }
+diff --git a/dist/utils/json-parse.js b/dist/utils/json-parse.js
+--- a/dist/utils/json-parse.js
++++ b/dist/utils/json-parse.js
+@@ -91,4 +91,7 @@
+ export function parseToolCallArguments(json) {
+     if (!json?.trim())
+         return { arguments: {} };
++    // dsh-custom-models: a relay that writes a call without arguments as the text "null" (an empty input
++    // serialized as JSON null) meant no arguments: pi-ai 1.1.0 ran it so, DSH's own gateway refuses it.
++    if (json.trim() === "null")
++        return { arguments: {} };
+     try {
