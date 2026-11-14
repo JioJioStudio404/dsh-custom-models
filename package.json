@@ -1,7 +1,8 @@
 {
   "name": "dsh-custom-models",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "description": "Your own API sites for DeepSeek Harness — relays, gateways, self-hosted and local servers speaking OpenAI Chat Completions or Responses, or Anthropic Messages, requested the way DSH's own custom gateway requests them (the same pi-ai release, bundled) — with many keys per site switched by hand, \"fetch models\" that reads what each site and model is (new-api / one-api, Charm Hyper, Vercel and OpenRouter balances and prices; a reference of 827 models for the rest), switch groups (one picker entry served by the site you choose), reasoning effort, tool calling and reasoning replay.",
+  "icon": "icon.svg",
   "type": "module",
   "main": "lib/index.js",
   "exports": {
@@ -30,7 +31,8 @@
     "cordis.patch.yml",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "icon.svg"
   ],
   "scripts": {
     "check": "node --check lib/index.js && node --check lib/client.js && node --check lib/authn/index.js",
@@ -38,7 +40,8 @@
     "build:vendor": "node scripts/build-vendor.mjs"
   },
   "engines": {
-    "node": ">=24.9"
+    "node": ">=24.9",
+    "dsh": ">=0.2.2-rc.1"
   },
   "keywords": [
     "deepseek-harness",
