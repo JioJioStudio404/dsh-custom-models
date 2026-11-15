@@ -12,7 +12,7 @@ DeepSeek Harness 的自定义 API 插件，用于接入你自己的 API 站点�
 - 用量统计：按站点、模型、日期记录请求数、Token、缓存命中、首字延迟与输出速度，并按你设置的价格估算花费
 - 模型核验（默认关闭）：检测站点的服务异常，以及响应特征与标称模型是否一致，并单独评估服务表现；除经 Anthropic 官方 API 的签名校验外，结论不构成真实性认证（站点自报的数据可以任意填写），每条依据标注其依据类型
   - 被动监测：记录响应的元数据，不发送额外请求，不保存对话内容
-  - 主动检测：身份核验、协议检测、签名校验、知识指纹；检测请求计入用量
+  - 主动检测：身份核验、协议检测（含号池一致性、错误格式、隐藏提示词）、签名校验、知识指纹、分布指纹；检测请求计入用量
 - 上下文与图片：站点不报用量时交给 DeepSeek Harness 估算；请求体超限（413）时自动替换旧图片或压缩上下文；可按站点设置默认上下文和图片额度，或让站点直接采用参考目录的上下文窗口（如 DeepSeek V4.1 Flash 的 1M）
 - 推理强度、工具调用、思考内容回传
 - 中转站适配（new-api / sub2api / claude-relay-service），全部只读：
@@ -48,6 +48,8 @@ dsh plugin --profile desktop add "/path/to/dsh-custom-models"
 安装后重启 DeepSeek Harness。
 
 ## 致谢
+
+分布指纹的方法来自论文 *Is Your LLM Relay Serving What It Claims? A low-cost and high-power test for LLM Relay Auditing*（arXiv 2610.37086，CC BY 4.0）；探针、答案归一化、统计实现、OpenAI 参考指纹与计数基线移植自 [relaycheck](https://github.com/YanYunCY/relaycheck)（MIT，© 2026 relaycheck contributors），许可声明见 `lib/authn/LICENSE-relaycheck.txt`。
 
 知识指纹的方法、提示词、题型与题库来自 [KBF: Knowledge Boundary as Fingerprint](https://github.com/Ooo0ption/KBF)（Apache License 2.0）。插件内置了其提示词与题型模板、容差，以及题库的索引与校验值；题库本身在使用时从 KBF 仓库下载。检测流程按插件需要重新实现。
 

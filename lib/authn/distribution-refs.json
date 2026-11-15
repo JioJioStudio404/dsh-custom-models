@@ -1,0 +1,1078 @@
+{
+ "format": 1,
+ "probeSet": "relaycheck-v2",
+ "source": {
+  "zh": "探针与 GPT 参考指纹来自 relaycheck（github.com/YanYunCY/relaycheck，MIT，© 2026 relaycheck contributors，提交 43d9294）；方法见 arXiv 2610.37086（CC BY 4.0）",
+  "en": "Probes and the GPT references from relaycheck (github.com/YanYunCY/relaycheck, MIT, © 2026 relaycheck contributors, commit 43d9294); method: arXiv 2610.37086 (CC BY 4.0)"
+ },
+ "refs": [
+  {
+   "id": "gpt-5.3-codex@responses",
+   "model": "gpt-5.3-codex",
+   "match": "^gpt[-_.]?5\\.3[-_.]codex(?:[-_.]\\d{4}[-_.]?\\d{2}[-_.]?\\d{2})?$",
+   "protocol": "responses",
+   "official": true,
+   "host": "OpenAI API",
+   "source": {
+    "zh": "relaycheck（MIT）在 OpenAI 官方 API 上录制",
+    "en": "recorded by relaycheck (MIT) on OpenAI's API"
+   },
+   "recorded": "2026-10-31",
+   "samples": 100,
+   "dispersion": 1.023,
+   "sampling": {
+    "temperature": 1,
+    "maxTokens": 128,
+    "effort": "none"
+   },
+   "probes": {
+    "letter10": {
+     "g": 100
+    },
+    "zh_animal": {
+     "马": 70,
+     "兔": 8,
+     "熊": 2,
+     "狗": 20
+    },
+    "continent": {
+     "asia": 88,
+     "europe": 8,
+     "africa": 4
+    },
+    "catname": {
+     "luna": 99,
+     "milo": 1
+    },
+    "month": {
+     "september": 88,
+     "october": 4,
+     "november": 5,
+     "april": 3
+    },
+    "metal": {
+     "copper": 70,
+     "platinum": 14,
+     "gold": 5,
+     "silver": 8,
+     "iron": 3
+    },
+    "coin3": {
+     "tht": 43,
+     "htt": 19,
+     "hth": 16,
+     "tth": 20,
+     "thh": 2
+    },
+    "flower": {
+     "orchid": 100
+    },
+    "sport": {
+     "soccer": 71,
+     "basketball": 13,
+     "tennis": 16
+    },
+    "daytime": {
+     "morning": 18,
+     "evening": 81,
+     "night": 1
+    },
+    "one_to_20": {
+     "13": 86,
+     "14": 7,
+     "17": 7
+    },
+    "weekday": {
+     "thursday": 100
+    },
+    "animal_rev": {
+     "owl": 99,
+     "fox": 1
+    },
+    "tree": {
+     "maple": 41,
+     "oak": 59
+    },
+    "rps": {
+     "paper": 84,
+     "scissors": 16
+    },
+    "shape": {
+     "triangle": 71,
+     "hexagon": 29
+    },
+    "planet": {
+     "saturn": 76,
+     "neptune": 3,
+     "mars": 21
+    },
+    "dessert": {
+     "brownie": 99,
+     "cookie": 1
+    },
+    "suit": {
+     "spades": 56,
+     "hearts": 44
+    },
+    "digit_not7": {
+     "3": 59,
+     "4": 41
+    },
+    "season": {
+     "autumn": 100
+    },
+    "animal": {
+     "owl": 92
+    },
+    "zh_color": {
+     "蓝": 95,
+     "绿": 5
+    },
+    "card_rank": {
+     "7": 57,
+     "8": 8,
+     "9": 5,
+     "q": 26,
+     "k": 4
+    }
+   },
+   "billing": {
+    "responses": {
+     "b1": 80,
+     "b4": 257,
+     "b12": 729
+    }
+   }
+  },
+  {
+   "id": "gpt-6-astra@responses",
+   "model": "gpt-6-astra",
+   "match": "^gpt[-_.]?6[-_.]astra(?:[-_.]\\d{4}[-_.]?\\d{2}[-_.]?\\d{2})?$",
+   "protocol": "responses",
+   "official": true,
+   "host": "OpenAI API",
+   "source": {
+    "zh": "relaycheck（MIT）在 OpenAI 官方 API 上录制",
+    "en": "recorded by relaycheck (MIT) on OpenAI's API"
+   },
+   "recorded": "2026-10-31",
+   "samples": 100,
+   "dispersion": 0.73,
+   "sampling": {
+    "temperature": 1,
+    "maxTokens": 128,
+    "effort": "low"
+   },
+   "probes": {
+    "letter10": {
+     "g": 96,
+     "f": 4
+    },
+    "zh_animal": {
+     "鹰": 72,
+     "兔": 28
+    },
+    "continent": {
+     "africa": 100
+    },
+    "catname": {
+     "milo": 78,
+     "luna": 22
+    },
+    "month": {
+     "october": 58,
+     "september": 42
+    },
+    "metal": {
+     "copper": 100
+    },
+    "coin3": {
+     "thh": 100
+    },
+    "flower": {
+     "tulip": 28,
+     "sunflower": 62,
+     "daisy": 10
+    },
+    "sport": {
+     "tennis": 100
+    },
+    "daytime": {
+     "evening": 94,
+     "morning": 6
+    },
+    "one_to_20": {
+     "7": 3,
+     "13": 37,
+     "14": 42,
+     "17": 18
+    },
+    "weekday": {
+     "thursday": 100
+    },
+    "animal_rev": {
+     "fox": 100
+    },
+    "tree": {
+     "maple": 100
+    },
+    "rps": {
+     "paper": 81,
+     "scissors": 18,
+     "rock": 1
+    },
+    "shape": {
+     "hexagon": 100
+    },
+    "planet": {
+     "saturn": 100
+    },
+    "dessert": {
+     "brownie": 100
+    },
+    "suit": {
+     "clubs": 92,
+     "spades": 8
+    },
+    "digit_not7": {
+     "3": 2,
+     "4": 98
+    },
+    "season": {
+     "autumn": 100
+    },
+    "animal": {
+     "fox": 46,
+     "owl": 54
+    },
+    "zh_color": {
+     "蓝": 82,
+     "绿": 17,
+     "紫": 1
+    },
+    "card_rank": {
+     "7": 98,
+     "8": 2
+    }
+   },
+   "billing": {
+    "responses": {
+     "b1": 80,
+     "b4": 257,
+     "b12": 729
+    },
+    "chat": {
+     "b1": 80,
+     "b4": 257,
+     "b12": 729
+    }
+   }
+  },
+  {
+   "id": "gpt-6-luna@responses",
+   "model": "gpt-6-luna",
+   "match": "^gpt[-_.]?6[-_.]luna(?:[-_.]\\d{4}[-_.]?\\d{2}[-_.]?\\d{2})?$",
+   "protocol": "responses",
+   "official": true,
+   "host": "OpenAI API",
+   "source": {
+    "zh": "relaycheck（MIT）在 OpenAI 官方 API 上录制",
+    "en": "recorded by relaycheck (MIT) on OpenAI's API"
+   },
+   "recorded": "2026-10-31",
+   "samples": 100,
+   "dispersion": 1.098,
+   "sampling": {
+    "temperature": 1,
+    "maxTokens": 128,
+    "effort": "none"
+   },
+   "probes": {
+    "letter10": {
+     "a": 36,
+     "g": 50,
+     "c": 14
+    },
+    "zh_animal": {
+     "兔": 55,
+     "鹰": 11,
+     "猫": 10,
+     "狗": 12,
+     "马": 2,
+     "熊": 10
+    },
+    "continent": {
+     "asia": 49,
+     "africa": 23,
+     "south america": 28
+    },
+    "catname": {
+     "milo": 87,
+     "luna": 13
+    },
+    "month": {
+     "september": 62,
+     "october": 28,
+     "november": 10
+    },
+    "metal": {
+     "gold": 49,
+     "copper": 45,
+     "platinum": 6
+    },
+    "coin3": {
+     "tht": 73,
+     "htt": 19,
+     "hth": 8
+    },
+    "flower": {
+     "tulip": 14,
+     "sunflower": 79,
+     "orchid": 7
+    },
+    "sport": {
+     "soccer": 72,
+     "tennis": 28
+    },
+    "daytime": {
+     "morning": 86,
+     "evening": 4,
+     "afternoon": 10
+    },
+    "one_to_20": {
+     "13": 76,
+     "14": 24
+    },
+    "weekday": {
+     "thursday": 74,
+     "wednesday": 26
+    },
+    "animal_rev": {
+     "owl": 6,
+     "fox": 94
+    },
+    "tree": {
+     "maple": 95,
+     "oak": 5
+    },
+    "rps": {
+     "scissors": 81,
+     "paper": 8,
+     "rock": 11
+    },
+    "shape": {
+     "hexagon": 89,
+     "circle": 11
+    },
+    "planet": {
+     "mars": 93,
+     "earth": 7
+    },
+    "dessert": {
+     "brownie": 96,
+     "cookie": 4
+    },
+    "suit": {
+     "hearts": 82,
+     "spades": 18
+    },
+    "digit_not7": {
+     "3": 12,
+     "4": 88
+    },
+    "season": {
+     "autumn": 97,
+     "spring": 3
+    },
+    "animal": {
+     "owl": 73,
+     "fox": 27
+    },
+    "zh_color": {
+     "绿": 40,
+     "蓝": 59,
+     "紫": 1
+    },
+    "card_rank": {
+     "7": 100
+    }
+   },
+   "billing": {
+    "responses": {
+     "b1": 80,
+     "b4": 257,
+     "b12": 729
+    },
+    "chat": {
+     "b1": 80,
+     "b4": 257,
+     "b12": 729
+    }
+   }
+  },
+  {
+   "id": "gpt-6-luna@chat",
+   "model": "gpt-6-luna",
+   "match": "^gpt[-_.]?6[-_.]luna(?:[-_.]\\d{4}[-_.]?\\d{2}[-_.]?\\d{2})?$",
+   "protocol": "chat",
+   "official": true,
+   "host": "OpenAI API",
+   "source": {
+    "zh": "relaycheck（MIT）在 OpenAI 官方 API 上录制",
+    "en": "recorded by relaycheck (MIT) on OpenAI's API"
+   },
+   "recorded": "2026-11-07",
+   "samples": 100,
+   "dispersion": 1.196,
+   "sampling": {
+    "temperature": 1,
+    "maxTokens": 128,
+    "effort": "none"
+   },
+   "probes": {
+    "letter10": {
+     "a": 21,
+     "g": 70,
+     "c": 9
+    },
+    "zh_animal": {
+     "兔": 60,
+     "狗": 14,
+     "猫": 13,
+     "鹰": 2,
+     "熊": 10,
+     "马": 1
+    },
+    "continent": {
+     "africa": 22,
+     "south america": 26,
+     "asia": 51,
+     "europe": 1
+    },
+    "catname": {
+     "milo": 90,
+     "luna": 10
+    },
+    "month": {
+     "september": 75,
+     "october": 24,
+     "november": 1
+    },
+    "metal": {
+     "gold": 69,
+     "copper": 23,
+     "platinum": 8
+    },
+    "coin3": {
+     "tht": 94,
+     "hth": 1,
+     "htt": 5
+    },
+    "flower": {
+     "sunflower": 91,
+     "tulip": 7,
+     "orchid": 2
+    },
+    "sport": {
+     "tennis": 38,
+     "soccer": 62
+    },
+    "daytime": {
+     "morning": 90,
+     "afternoon": 10
+    },
+    "one_to_20": {
+     "13": 64,
+     "14": 35,
+     "17": 1
+    },
+    "weekday": {
+     "thursday": 68,
+     "wednesday": 31,
+     "tuesday": 1
+    },
+    "animal_rev": {
+     "fox": 95,
+     "owl": 5
+    },
+    "tree": {
+     "maple": 95,
+     "oak": 5
+    },
+    "rps": {
+     "scissors": 70,
+     "rock": 18,
+     "paper": 12
+    },
+    "shape": {
+     "circle": 30,
+     "hexagon": 67,
+     "triangle": 3
+    },
+    "planet": {
+     "mars": 90,
+     "earth": 6,
+     "neptune": 4
+    },
+    "dessert": {
+     "brownie": 95,
+     "cookie": 5
+    },
+    "suit": {
+     "hearts": 87,
+     "spades": 13
+    },
+    "digit_not7": {
+     "3": 10,
+     "4": 90
+    },
+    "season": {
+     "autumn": 100
+    },
+    "animal": {
+     "fox": 57,
+     "owl": 43
+    },
+    "zh_color": {
+     "蓝": 59,
+     "绿": 41
+    },
+    "card_rank": {
+     "7": 100
+    }
+   },
+   "billing": {
+    "chat": {
+     "b1": 80,
+     "b4": 257,
+     "b12": 729
+    },
+    "responses": {
+     "b1": 80,
+     "b4": 257,
+     "b12": 729
+    }
+   }
+  },
+  {
+   "id": "gpt-6.1-sol@responses",
+   "model": "gpt-6.1-sol",
+   "match": "^gpt[-_.]?6\\.1[-_.]sol(?:[-_.]\\d{4}[-_.]?\\d{2}[-_.]?\\d{2})?$",
+   "protocol": "responses",
+   "official": true,
+   "host": "OpenAI API",
+   "source": {
+    "zh": "relaycheck（MIT）在 OpenAI 官方 API 上录制",
+    "en": "recorded by relaycheck (MIT) on OpenAI's API"
+   },
+   "recorded": "2026-10-31",
+   "samples": 100,
+   "dispersion": 1.192,
+   "sampling": {
+    "temperature": 1,
+    "maxTokens": 128,
+    "effort": "low"
+   },
+   "probes": {
+    "letter10": {
+     "g": 100
+    },
+    "zh_animal": {
+     "鹰": 72,
+     "兔": 28
+    },
+    "continent": {
+     "africa": 100
+    },
+    "catname": {
+     "milo": 73,
+     "luna": 27
+    },
+    "month": {
+     "september": 67,
+     "october": 33
+    },
+    "metal": {
+     "copper": 92
+    },
+    "coin3": {
+     "thh": 95,
+     "hth": 1,
+     "htt": 4
+    },
+    "flower": {
+     "sunflower": 78,
+     "tulip": 7,
+     "daisy": 15
+    },
+    "sport": {
+     "tennis": 100
+    },
+    "daytime": {
+     "evening": 93,
+     "morning": 7
+    },
+    "one_to_20": {
+     "13": 33,
+     "14": 20,
+     "17": 47
+    },
+    "weekday": {
+     "thursday": 100
+    },
+    "animal_rev": {
+     "fox": 100
+    },
+    "tree": {
+     "maple": 100
+    },
+    "rps": {
+     "paper": 73,
+     "scissors": 21,
+     "rock": 6
+    },
+    "shape": {
+     "hexagon": 100
+    },
+    "planet": {
+     "saturn": 100
+    },
+    "dessert": {
+     "brownie": 100
+    },
+    "suit": {
+     "clubs": 94,
+     "spades": 2,
+     "hearts": 4
+    },
+    "digit_not7": {
+     "3": 9,
+     "4": 91
+    },
+    "season": {
+     "autumn": 100
+    },
+    "animal": {
+     "fox": 69,
+     "owl": 31
+    },
+    "zh_color": {
+     "蓝": 97,
+     "绿": 3
+    },
+    "card_rank": {
+     "7": 99,
+     "8": 1
+    }
+   },
+   "billing": {
+    "responses": {
+     "b1": 80,
+     "b4": 257,
+     "b12": 729
+    },
+    "chat": {
+     "b1": 80,
+     "b4": 257,
+     "b12": 729
+    }
+   }
+  },
+  {
+   "id": "gpt-6.1-sol@chat",
+   "model": "gpt-6.1-sol",
+   "match": "^gpt[-_.]?6\\.1[-_.]sol(?:[-_.]\\d{4}[-_.]?\\d{2}[-_.]?\\d{2})?$",
+   "protocol": "chat",
+   "official": true,
+   "host": "OpenAI API",
+   "source": {
+    "zh": "relaycheck（MIT）在 OpenAI 官方 API 上录制",
+    "en": "recorded by relaycheck (MIT) on OpenAI's API"
+   },
+   "recorded": "2026-11-07",
+   "samples": 100,
+   "dispersion": 0.874,
+   "sampling": {
+    "temperature": 1,
+    "maxTokens": 128,
+    "effort": "low"
+   },
+   "probes": {
+    "letter10": {
+     "f": 9,
+     "g": 91
+    },
+    "zh_animal": {
+     "兔": 28,
+     "鹰": 72
+    },
+    "continent": {
+     "africa": 100
+    },
+    "catname": {
+     "milo": 92,
+     "luna": 8
+    },
+    "month": {
+     "september": 95,
+     "october": 5
+    },
+    "metal": {
+     "copper": 100
+    },
+    "coin3": {
+     "thh": 96,
+     "htt": 4
+    },
+    "flower": {
+     "sunflower": 46,
+     "daisy": 24,
+     "tulip": 30
+    },
+    "sport": {
+     "tennis": 100
+    },
+    "daytime": {
+     "morning": 12,
+     "evening": 88
+    },
+    "one_to_20": {
+     "7": 2,
+     "13": 38,
+     "14": 22,
+     "17": 38
+    },
+    "weekday": {
+     "thursday": 100
+    },
+    "animal_rev": {
+     "fox": 100
+    },
+    "tree": {
+     "maple": 98,
+     "oak": 1,
+     "willow": 1
+    },
+    "rps": {
+     "paper": 72,
+     "scissors": 28
+    },
+    "shape": {
+     "hexagon": 99,
+     "triangle": 1
+    },
+    "planet": {
+     "saturn": 100
+    },
+    "dessert": {
+     "brownie": 100
+    },
+    "suit": {
+     "clubs": 98,
+     "hearts": 2
+    },
+    "digit_not7": {
+     "3": 24,
+     "4": 76
+    },
+    "season": {
+     "autumn": 100
+    },
+    "animal": {
+     "fox": 69,
+     "owl": 31
+    },
+    "zh_color": {
+     "蓝": 92,
+     "绿": 4,
+     "紫": 4
+    },
+    "card_rank": {
+     "7": 91,
+     "8": 9
+    }
+   },
+   "billing": {
+    "chat": {
+     "b1": 80,
+     "b4": 257,
+     "b12": 729
+    },
+    "responses": {
+     "b1": 80,
+     "b4": 257,
+     "b12": 729
+    }
+   }
+  },
+  {
+   "id": "gpt-6.1-terra@responses",
+   "model": "gpt-6.1-terra",
+   "match": "^gpt[-_.]?6\\.1[-_.]terra(?:[-_.]\\d{4}[-_.]?\\d{2}[-_.]?\\d{2})?$",
+   "protocol": "responses",
+   "official": true,
+   "host": "OpenAI API",
+   "source": {
+    "zh": "relaycheck（MIT）在 OpenAI 官方 API 上录制",
+    "en": "recorded by relaycheck (MIT) on OpenAI's API"
+   },
+   "recorded": "2026-10-31",
+   "samples": 100,
+   "dispersion": 0.877,
+   "sampling": {
+    "temperature": 1,
+    "maxTokens": 128,
+    "effort": "none"
+   },
+   "probes": {
+    "letter10": {
+     "g": 99,
+     "h": 1
+    },
+    "zh_animal": {
+     "兔": 67,
+     "鹰": 22,
+     "熊": 11
+    },
+    "continent": {
+     "asia": 29,
+     "africa": 71
+    },
+    "catname": {
+     "luna": 76,
+     "milo": 24
+    },
+    "month": {
+     "october": 47,
+     "september": 53
+    },
+    "metal": {
+     "copper": 70,
+     "gold": 24,
+     "silver": 6
+    },
+    "coin3": {
+     "tht": 82,
+     "htt": 8,
+     "thh": 10
+    },
+    "flower": {
+     "tulip": 34,
+     "sunflower": 63,
+     "daisy": 3
+    },
+    "sport": {
+     "tennis": 100
+    },
+    "daytime": {
+     "morning": 83,
+     "evening": 17
+    },
+    "one_to_20": {
+     "13": 62,
+     "14": 24,
+     "17": 14
+    },
+    "weekday": {
+     "thursday": 81,
+     "wednesday": 19
+    },
+    "animal_rev": {
+     "owl": 9,
+     "fox": 91
+    },
+    "tree": {
+     "willow": 88,
+     "maple": 7
+    },
+    "rps": {
+     "paper": 25,
+     "rock": 22,
+     "scissors": 52
+    },
+    "shape": {
+     "triangle": 47,
+     "circle": 39,
+     "hexagon": 13,
+     "star": 1
+    },
+    "planet": {
+     "saturn": 98,
+     "neptune": 2
+    },
+    "dessert": {
+     "brownie": 100
+    },
+    "suit": {
+     "hearts": 100
+    },
+    "digit_not7": {
+     "4": 100
+    },
+    "season": {
+     "autumn": 100
+    },
+    "animal": {
+     "owl": 95,
+     "fox": 5
+    },
+    "zh_color": {
+     "蓝": 100
+    },
+    "card_rank": {
+     "7": 97,
+     "8": 3
+    }
+   },
+   "billing": {
+    "responses": {
+     "b1": 80,
+     "b4": 257,
+     "b12": 729
+    },
+    "chat": {
+     "b1": 80,
+     "b4": 257,
+     "b12": 729
+    }
+   }
+  },
+  {
+   "id": "gpt-6.1-terra@chat",
+   "model": "gpt-6.1-terra",
+   "match": "^gpt[-_.]?6\\.1[-_.]terra(?:[-_.]\\d{4}[-_.]?\\d{2}[-_.]?\\d{2})?$",
+   "protocol": "chat",
+   "official": true,
+   "host": "OpenAI API",
+   "source": {
+    "zh": "relaycheck（MIT）在 OpenAI 官方 API 上录制",
+    "en": "recorded by relaycheck (MIT) on OpenAI's API"
+   },
+   "recorded": "2026-11-07",
+   "samples": 100,
+   "dispersion": 1.112,
+   "sampling": {
+    "temperature": 1,
+    "maxTokens": 128,
+    "effort": "none"
+   },
+   "probes": {
+    "letter10": {
+     "g": 93,
+     "h": 6,
+     "c": 1
+    },
+    "zh_animal": {
+     "兔": 74,
+     "鹰": 24,
+     "熊": 2
+    },
+    "continent": {
+     "asia": 38,
+     "africa": 62
+    },
+    "catname": {
+     "luna": 90,
+     "milo": 10
+    },
+    "month": {
+     "september": 74,
+     "october": 26
+    },
+    "metal": {
+     "gold": 13,
+     "copper": 74,
+     "silver": 13
+    },
+    "coin3": {
+     "tht": 35,
+     "thh": 13,
+     "tth": 48,
+     "htt": 4
+    },
+    "flower": {
+     "sunflower": 62,
+     "tulip": 34,
+     "daisy": 4
+    },
+    "sport": {
+     "tennis": 100
+    },
+    "daytime": {
+     "morning": 77,
+     "evening": 23
+    },
+    "one_to_20": {
+     "13": 77,
+     "14": 13,
+     "17": 10
+    },
+    "weekday": {
+     "thursday": 86,
+     "wednesday": 14
+    },
+    "animal_rev": {
+     "fox": 90,
+     "owl": 10
+    },
+    "tree": {
+     "willow": 94,
+     "maple": 6
+    },
+    "rps": {
+     "scissors": 75,
+     "paper": 22,
+     "rock": 3
+    },
+    "shape": {
+     "circle": 33,
+     "triangle": 54,
+     "hexagon": 10,
+     "star": 3
+    },
+    "planet": {
+     "saturn": 91,
+     "mars": 4,
+     "neptune": 5
+    },
+    "dessert": {
+     "brownie": 100
+    },
+    "suit": {
+     "hearts": 96,
+     "spades": 4
+    },
+    "digit_not7": {
+     "4": 100
+    },
+    "season": {
+     "autumn": 100
+    },
+    "animal": {
+     "owl": 81,
+     "fox": 19
+    },
+    "zh_color": {
+     "蓝": 89,
+     "绿": 11
+    },
+    "card_rank": {
+     "7": 85,
+     "8": 15
+    }
+   },
+   "billing": {
+    "chat": {
+     "b1": 80,
+     "b4": 257,
+     "b12": 729
+    },
+    "responses": {
+     "b1": 80,
+     "b4": 257,
+     "b12": 729
+    }
+   }
+  }
+ ]
+}
